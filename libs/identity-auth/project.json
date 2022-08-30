@@ -1,0 +1,25 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/identity-auth/src",
+  "prefix": "identity-auth",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/identity-auth"],
+      "options": {
+        "jestConfig": "libs/identity-auth/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/identity-auth/**/*.ts",
+          "libs/identity-auth/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

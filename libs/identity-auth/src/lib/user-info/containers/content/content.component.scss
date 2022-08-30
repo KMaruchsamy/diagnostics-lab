@@ -1,0 +1,73 @@
+.page-content {
+  /* resize in container */
+  flex: 1;
+
+  /* IMPORTANT for FireFox */
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* new flex container for content */
+  display: flex;
+  flex-direction: row;
+  &_sidebar-left {
+    flex: none;
+    background: #535353;
+    padding: 20px;
+    width: 250px;
+    min-width: 150px;
+    overflow: auto;
+    color: white;
+    white-space: nowrap;
+  }
+  &_spliter {
+    flex: none;
+    width: 17px;
+    cursor: col-resize;
+    background: #535353;
+    background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/vsizegrip.png)
+      center center no-repeat #535353;
+  }
+}
+.content-container {
+  flex: 1 1 auto;
+  background: #464544;
+  padding: 20px;
+  width: 100%;
+  min-width: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  /* new flex for content/ads*/
+  flex-direction: row;
+  color: white;
+  &_main-content {
+    flex: 1 1 auto;
+    width: 100%;
+    padding: 10px;
+    min-width: 300px;
+  }
+  &_page-ads {
+    flex: none;
+    border-left: 1px solid silver;
+    margin-left: 10px;
+    padding-left: 10px;
+    width: 180px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    .advert {
+      flex: none;
+      align-self: center;
+      padding: 5px;
+      margin: 15px;
+      width: 150px;
+      height: 150px;
+      background: lightblue;
+      color: green;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

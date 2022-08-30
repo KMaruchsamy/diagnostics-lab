@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@diagnostics-lab/identity-auth": ["libs/identity-auth/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
