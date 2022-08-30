@@ -21,7 +21,7 @@ export const DeleteUserFail = createAction(
 );
 export const AddAddress = createAction(
   '[Add] Address ',
-  props<{ userId: string; address: IAddress }>()
+  props<{ address: IAddress }>()
 );
 export const AddAddressSuccess = createAction('[Add] Address Success');
 export const AddaddressFail = createAction(
@@ -30,7 +30,7 @@ export const AddaddressFail = createAction(
 );
 export const DeleteAddress = createAction(
   '[Delete] Address ',
-  props<{ addressId: string }>()
+  props<{ userId: string; addressId: string }>()
 );
 export const DeleteAddressSuccess = createAction('[Delete] Address Success');
 export const DeleteAddressFail = createAction(

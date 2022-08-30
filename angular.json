@@ -3,7 +3,7 @@
   "version": 2,
   "projects": {
     "identity": "apps/identity",
-    "identity-e2e": "apps/identity-e2e",
-    "identity-auth": "libs/identity-auth"
+    "identity-auth": "libs/identity-auth",
+    "identity-e2e": "apps/identity-e2e"
   }
 }

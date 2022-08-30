@@ -8,10 +8,13 @@ import { ContentComponent } from './containers/content/content.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { EffectsModule } from '@ngrx/effects';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatInputModule } from '@angular/material/input';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { userInfoReducer } from './+store';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RegisterationComponent } from './components/registeration/registeration.component';
 
 export const routes: Routes = [
   {
@@ -26,12 +29,17 @@ export const routes: Routes = [
     HeaderComponent,
     FooterComponent,
     ContentComponent,
+    RegisterationComponent,
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
+    MatTabsModule,
+    MatInputModule,
     RouterModule.forChild(routes),
     StoreModule.forRoot({
       user: userInfoReducer,

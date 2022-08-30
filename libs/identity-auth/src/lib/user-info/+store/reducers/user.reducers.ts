@@ -14,6 +14,7 @@ import {
   DeleteUserSuccess,
   DeleteUserFail,
 } from '../actions/user.actions';
+import { v4 } from 'uuid';
 
 export interface userState {
   userInfo: IUserInfo[];
@@ -23,18 +24,20 @@ export const userFeatureKey = 'user';
 export interface UserRootState {
   [userFeatureKey]: userState;
 }
+const uuid = v4();
 const initialState: userState = {
   userInfo: [
     {
-      userId: '',
+      userId: uuid,
       userName: '',
       email: '',
       address: [
         {
-          addressId: '',
+          userId: uuid,
+          addressId: v4(),
           city: 'Bangalore',
           state: 'Karnataka',
-          pinCode: 638476,
+          pinCode: 123456,
           isDefault: true,
         },
       ],
@@ -75,8 +78,20 @@ export const userInfoReducer = createReducer(
     loading: false,
     loaded: true,
   })),
-  on(AddAddress, (state, { userId, address }) => ({
+  on(AddAddress, (state, { address }) => ({
     ...state,
+    userInfo: [
+      ...state.userInfo.map((user) => {
+        if (user.userId === address.userId) {
+          return {
+            ...user,
+            address: [...user.address, address],
+          };
+        } else {
+          return user;
+        }
+      }),
+    ],
     loading: true,
     loaded: false,
   })),
@@ -90,11 +105,29 @@ export const userInfoReducer = createReducer(
     loading: false,
     loaded: true,
   })),
-  on(DeleteAddress, (state) => ({
-    ...state,
-    loading: true,
-    loaded: false,
-  })),
+  on(DeleteAddress, (state, { userId, addressId }) => {
+    return {
+      ...state,
+      userInfo: [
+        ...state.userInfo.map((user) => {
+          if (user.userId === userId) {
+            const index = user.address.findIndex(function (a) {
+              return a.addressId === addressId && !a.isDefault;
+            });
+            return {
+              ...user,
+              address:
+                index !== -1 ? user.address.splice(index, 1) : user.address,
+            };
+          } else {
+            return user;
+          }
+        }),
+      ],
+      loading: true,
+      loaded: false,
+    };
+  }),
   on(DeleteAddressSuccess, (state) => ({
     ...state,
     loading: false,

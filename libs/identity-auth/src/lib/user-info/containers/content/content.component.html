@@ -1,10 +1,12 @@
 <div class="page-content">
-  <div class="page-content_sidebar-left">sidebar</div>
-  <div class="page-content_spliter"></div>
-  <div class="content-container">
-    <article class="content-container_main-content">real content</article>
-    <aside class="content-container_page-ads">
-      <div class="advert">Display Ad</div>
-    </aside>
-  </div>
+  <mat-tab-group>
+    <mat-tab label="Registeration">
+      <identity-auth-registeration
+        [userProfile]="userProfile$ | async"
+        (addAddress)="addAddress($event)"
+        (deleteAddress)="deleteAddress($event)"
+      ></identity-auth-registeration>
+    </mat-tab>
+    <mat-tab label="UserDetails"> Content 2 </mat-tab>
+  </mat-tab-group>
 </div>
