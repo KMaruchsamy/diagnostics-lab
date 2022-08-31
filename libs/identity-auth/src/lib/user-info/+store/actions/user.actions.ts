@@ -21,7 +21,7 @@ export const DeleteUserFail = createAction(
 );
 export const AddAddress = createAction(
   '[Add] Address ',
-  props<{ address: IAddress }>()
+  props<{ userId: string; address: IAddress }>()
 );
 export const AddAddressSuccess = createAction('[Add] Address Success');
 export const AddaddressFail = createAction(

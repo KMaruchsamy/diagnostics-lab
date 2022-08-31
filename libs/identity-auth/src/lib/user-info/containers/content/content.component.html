@@ -2,7 +2,6 @@
   <mat-tab-group>
     <mat-tab label="Registeration">
       <identity-auth-registeration
-        [userProfile]="userProfile$ | async"
         (addAddress)="addAddress($event)"
         (deleteAddress)="deleteAddress($event)"
         (userRegister)="userRegister($event)"

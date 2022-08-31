@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import {
-  AddAddress,
-  AddUser,
-  DeleteAddress,
-  getDefaultUser,
-} from '../../+store';
+import { AddAddress, AddUser, DeleteAddress } from '../../+store';
 import { AppState } from '../../+store/app.state';
 import { IAddress, IUserInfo } from '../../models';
 
@@ -16,13 +10,12 @@ import { IAddress, IUserInfo } from '../../models';
   styleUrls: ['./content.component.scss'],
 })
 export class ContentComponent {
-  userProfile$: Observable<IUserInfo>;
-  constructor(private store: Store<AppState>) {
-    this.userProfile$ = this.store.select(getDefaultUser);
-  }
+  constructor(private store: Store<AppState>) {}
 
-  addAddress(address: IAddress) {
-    this.store.dispatch(AddAddress({ address: address }));
+  addAddress(event: any) {
+    this.store.dispatch(
+      AddAddress({ userId: event.userId, address: event.address })
+    );
   }
 
   deleteAddress(event: any) {

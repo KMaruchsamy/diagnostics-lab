@@ -14,7 +14,6 @@ import {
   DeleteUserSuccess,
   DeleteUserFail,
 } from '../actions/user.actions';
-import { v4 } from 'uuid';
 
 export interface userState {
   userInfo: IUserInfo[];
@@ -24,25 +23,8 @@ export const userFeatureKey = 'user';
 export interface UserRootState {
   [userFeatureKey]: userState;
 }
-const uuid = v4();
 const initialState: userState = {
-  userInfo: [
-    {
-      userId: uuid,
-      userName: '',
-      email: '',
-      address: [
-        {
-          userId: uuid,
-          addressId: v4(),
-          city: 'Bangalore',
-          state: 'Karnataka',
-          pinCode: 123456,
-          isDefault: true,
-        },
-      ],
-    },
-  ],
+  userInfo: [],
 };
 
 export const userInfoReducer = createReducer(
@@ -78,11 +60,11 @@ export const userInfoReducer = createReducer(
     loading: false,
     loaded: true,
   })),
-  on(AddAddress, (state, { address }) => ({
+  on(AddAddress, (state, { userId, address }) => ({
     ...state,
     userInfo: [
       ...state.userInfo.map((user) => {
-        if (user.userId === address.userId) {
+        if (user.userId === userId) {
           return {
             ...user,
             address: [...user.address, address],
@@ -113,7 +95,9 @@ export const userInfoReducer = createReducer(
           if (user.userId === userId) {
             return {
               ...user,
-              address: user.address.filter((f) => f.isDefault),
+              address: user.address.filter(
+                (f) => f.addressId !== addressId || f.isDefault
+              ),
             };
           } else {
             return user;
