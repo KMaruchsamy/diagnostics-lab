@@ -49,7 +49,7 @@ export const userInfoReducer = createReducer(
   initialState,
   on(AddUser, (state, { user }) => ({
     ...state,
-    userInfo: [user],
+    userInfo: [...state.userInfo, user],
     loading: true,
     loaded: false,
   })),
@@ -111,13 +111,9 @@ export const userInfoReducer = createReducer(
       userInfo: [
         ...state.userInfo.map((user) => {
           if (user.userId === userId) {
-            const index = user.address.findIndex(function (a) {
-              return a.addressId === addressId && !a.isDefault;
-            });
             return {
               ...user,
-              address:
-                index !== -1 ? user.address.splice(index, 1) : user.address,
+              address: user.address.filter((f) => f.isDefault),
             };
           } else {
             return user;

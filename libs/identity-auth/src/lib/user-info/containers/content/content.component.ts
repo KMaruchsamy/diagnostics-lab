@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AddAddress, DeleteAddress, getDefaultUser } from '../../+store';
+import {
+  AddAddress,
+  AddUser,
+  DeleteAddress,
+  getDefaultUser,
+} from '../../+store';
 import { AppState } from '../../+store/app.state';
 import { IAddress, IUserInfo } from '../../models';
 
@@ -24,5 +29,9 @@ export class ContentComponent {
     this.store.dispatch(
       DeleteAddress({ userId: event.userId, addressId: event.addressId })
     );
+  }
+
+  userRegister(user: IUserInfo) {
+    this.store.dispatch(AddUser({ user: user }));
   }
 }

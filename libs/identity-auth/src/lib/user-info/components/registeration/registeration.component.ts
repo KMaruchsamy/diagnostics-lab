@@ -19,6 +19,7 @@ export class RegisterationComponent implements OnInit {
   @Output() addAddress: EventEmitter<IAddress> = new EventEmitter();
   @Output() deleteAddress: EventEmitter<{ userId: string; addressId: string }> =
     new EventEmitter();
+  @Output() userRegister: EventEmitter<IUserInfo> = new EventEmitter();
   @Input() userProfile: any;
   identityForm: FormGroup;
   constructor(private formBuilder: FormBuilder) {
@@ -61,6 +62,10 @@ export class RegisterationComponent implements OnInit {
           userId: userId,
           addressId: addressForm.value.addressId,
         });
+      } else {
+        if (this.identityForm?.valid) {
+          this.userRegister.emit(this.identityForm?.value);
+        }
       }
     }
   }
