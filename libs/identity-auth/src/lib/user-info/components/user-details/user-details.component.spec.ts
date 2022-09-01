@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserDetailsComponent } from './user-details.component';
+import { MatTableModule } from '@angular/material/table';
 
 describe('UserDetailsComponent', () => {
   let component: UserDetailsComponent;
@@ -8,6 +9,7 @@ describe('UserDetailsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [UserDetailsComponent],
+      imports: [MatTableModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserDetailsComponent);

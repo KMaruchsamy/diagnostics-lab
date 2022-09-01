@@ -1,5 +1,4 @@
 import { createSelector } from '@ngrx/store';
-import { email } from '../../models';
 import { AppState } from '../app.state';
 import { userFeatureKey } from '../reducers';
 
