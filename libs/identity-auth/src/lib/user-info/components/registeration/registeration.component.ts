@@ -54,10 +54,7 @@ export class RegisterationComponent implements OnInit {
     this.eventName = '';
     this.identityForm = this.formBuilder.group({
       userId: [''],
-      userName: [
-        '',
-        Validators.compose([Validators.required, Validators.maxLength(10)]),
-      ],
+      userName: ['', [Validators.required]],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       address: this.formBuilder.group({
         addressId: [''],

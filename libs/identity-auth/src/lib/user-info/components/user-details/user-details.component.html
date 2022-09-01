@@ -1,5 +1,10 @@
 <div class="user-details">
-  <table mat-table [dataSource]="userDetails" class="mat-elevation-z8">
+  <table
+    mat-table
+    [dataSource]="userDetails"
+    *ngIf="userDetails?.length"
+    class="mat-elevation-z8"
+  >
     <ng-container matColumnDef="userName">
       <th mat-header-cell *matHeaderCellDef>User Name</th>
       <td mat-cell *matCellDef="let element">{{ element.userName }}</td>
@@ -13,9 +18,12 @@
     <ng-container matColumnDef="address">
       <th mat-header-cell *matHeaderCellDef>Address</th>
       <td mat-cell *matCellDef="let element">
-        <div>City : {{ element.address?.city }}</div>
-        <div>State : {{ element.address?.state }}</div>
-        <div>Pin : {{ element.address?.pinCode }}</div>
+        <div *ngIf="element.address?.city">
+          <div>City : {{ element.address?.city }}</div>
+          <div>State : {{ element.address?.state }}</div>
+          <div>Pin : {{ element.address?.pinCode }}</div>
+        </div>
+        <div *ngIf="!element.address?.city">default address not added</div>
       </td>
     </ng-container>
 
@@ -23,7 +31,7 @@
       <th mat-header-cell *matHeaderCellDef>Action</th>
       <td mat-cell *matCellDef="let element">
         <button
-        mat-raised-button
+          mat-raised-button
           color="warn"
           (click)="removeUser(element.userId)"
         >
@@ -35,4 +43,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
+  <div *ngIf="!userDetails?.length">No record found</div>
 </div>
