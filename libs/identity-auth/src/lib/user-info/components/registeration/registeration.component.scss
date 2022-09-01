@@ -1,6 +1,10 @@
 .page-content-form__row {
   display: flex;
-  flex-direction: inherit;
+  flex-direction: column;
+  &_address {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .hide {

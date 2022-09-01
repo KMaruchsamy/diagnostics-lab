@@ -5,64 +5,106 @@
     </mat-form-field>
     <mat-form-field class="page-content-form__name">
       <mat-label>User Name</mat-label>
-      <input matInput placeholder="User Name" formControlName="userName" />
+      <input
+        matInput
+        type="text"
+        onkeypress="return /[a-zA-Z]/i.test(event.key)"
+        placeholder="User Name"
+        maxlength="20"
+        formControlName="userName"
+      />
       <mat-error *ngIf="identityForm.get('userName')?.hasError('required')">
-        You must enter a value
+        enter user name with the character limit is 20
       </mat-error>
     </mat-form-field>
     <mat-form-field class="page-content-form__email">
       <mat-label>Email</mat-label>
-      <input placeholder="Email" matInput formControlName="email" />
+      <input
+        placeholder="Email"
+        maxlength="30"
+        matInput
+        formControlName="email"
+      />
       <mat-error *ngIf="identityForm.get('email')?.hasError('required')">
-        You must enter a value
+        enter email with character limit is 30
       </mat-error>
       <mat-error *ngIf="identityForm.get('email')?.hasError('email')">
-        Not a valid email
+        email id not valid
       </mat-error>
     </mat-form-field>
-    <div formGroupName="address">
+    <div formGroupName="address" class="page-content-form__row_address">
       Address
       <mat-form-field class="hide">
         <input matInput formControlName="addressId" />
       </mat-form-field>
       <mat-form-field class="page-content-form__city">
         <mat-label>City</mat-label>
-        <input matInput placeholder="City" matInput formControlName="city" />
+        <input
+          matInput
+          onkeypress="return /[a-zA-Z]/i.test(event.key)"
+          maxlength="20"
+          placeholder="City"
+          matInput
+          formControlName="city"
+        />
         <mat-error
           *ngIf="identityForm.get('address')?.get('city')?.hasError('required')"
         >
-          City Required
+          enter city with character limit is 20
         </mat-error>
       </mat-form-field>
       <mat-form-field class="page-content-form__state">
         <mat-label>State</mat-label>
-        <input placeholder="State" matInput formControlName="state" />
+        <input
+          placeholder="State"
+          onkeypress="return /[a-zA-Z]/i.test(event.key)"
+          maxlength="20"
+          matInput
+          formControlName="state"
+        />
         <mat-error
           *ngIf="
             identityForm.get('address')?.get('state')?.hasError('required')
           "
         >
-          State Required
+          enter state with character limit is 20
         </mat-error>
       </mat-form-field>
       <mat-form-field class="page-content-form__pincode">
-        <mat-label>pinCode</mat-label>
-        <input placeholder="Pincode" matInput formControlName="pinCode" />
+        <mat-label>Pincode</mat-label>
+        <input
+          placeholder="Pincode"
+          minlength="6"
+          maxlength="6"
+          onkeypress="return /[0-9]/i.test(event.key)"
+          matInput
+          formControlName="pinCode"
+        />
         <mat-error
           *ngIf="
             identityForm.get('address')?.get('pinCode')?.hasError('required')
           "
         >
-          PinCode Required
+          enter pincode with character limit is 6 and numeric
         </mat-error>
       </mat-form-field>
-      <button mat-button color="primary" name="addaddress">Add Address</button>
-      <button mat-button color="primary" name="deleteaddress">
+      <button mat-raised-button color="primary" name="addaddress">
+        Add Address
+      </button>
+      <button mat-raised-button color="primary" name="deleteaddress">
         Delete Address
       </button>
     </div>
   </div>
-  <button type="submit" mat-button color="primary" name="register">
+  <button type="submit" mat-raised-button color="primary" name="register">
     Register
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="resetForm(identityForm)"
+    name="reset"
+  >
+    Reset
   </button>
 </form>

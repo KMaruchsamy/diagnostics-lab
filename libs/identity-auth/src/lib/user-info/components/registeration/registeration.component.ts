@@ -1,23 +1,37 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   AddAddress,
+  addAddressMessage,
   Address,
   addressId,
+  BeforeRegisterMessage,
+  city,
+  defaultAddressMessage,
   DeleteAddress,
+  deleteAddressMessage,
   email,
   IAddress,
+  isDefault,
   IUserInfo,
+  noAddressMessage,
+  defaultPinCode,
   pinCode,
   register,
+  reset,
+  state,
   UserId,
   UserName,
+  userRegisterMessage,
+  defaultCity,
+  defaultState,
 } from '../../models';
 import { v4 } from 'uuid';
 import { AppState } from '../../+store/app.state';
 import { Store } from '@ngrx/store';
 import { getSelectedAddress } from '../../+store';
-import { filter } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogModalComponent } from '../dialog-modal/dialog-modal.component';
 
 @Component({
   selector: 'identity-auth-registeration',
@@ -31,10 +45,13 @@ export class RegisterationComponent implements OnInit {
     new EventEmitter();
   @Output() userRegister: EventEmitter<IUserInfo> = new EventEmitter();
   identityForm: FormGroup;
+  eventName: string;
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    public dialog: MatDialog
   ) {
+    this.eventName = '';
     this.identityForm = this.formBuilder.group({
       userId: [''],
       userName: [
@@ -44,20 +61,28 @@ export class RegisterationComponent implements OnInit {
       email: ['', Validators.compose([Validators.required, Validators.email])],
       address: this.formBuilder.group({
         addressId: [''],
-        city: ['Bangalore', Validators.required],
-        state: ['Karnataka', Validators.required],
-        pinCode: ['123456', Validators.required],
+        city: [defaultCity, Validators.required],
+        state: [defaultState, Validators.required],
+        pinCode: [defaultPinCode, Validators.required],
         isDefault: [true, Validators.required],
       }),
     });
   }
 
   ngOnInit(): void {}
+
+  openDialog(message: string) {
+    this.dialog.open(DialogModalComponent, {
+      data: message,
+    });
+  }
+
   register(event: any): void {
     if (this.identityForm?.valid) {
+      this.eventName = event.submitter.name;
       const userId = this.identityForm.get(UserId)?.value;
       const addressId = this.identityForm.get(Address)?.value.addressId;
-      if (event.submitter.name === register) {
+      if (this.eventName === register) {
         this.setUniqueUser();
         this.setUniqueAddress();
         const userProfile: IUserInfo = {
@@ -67,31 +92,52 @@ export class RegisterationComponent implements OnInit {
           address: [this.getAddress()],
         };
         this.userRegister.emit(userProfile);
-      }
-      if (userId && event.submitter.name === AddAddress) {
+        this.openDialog(userRegisterMessage);
+      } else if (userId && this.eventName === AddAddress) {
         this.setUniqueAddress();
         this.addAddress.emit({ userId: userId, address: this.getAddress() });
-      } else if (
-        userId &&
-        addressId &&
-        event.submitter.name === DeleteAddress
-      ) {
+        this.openDialog(addAddressMessage);
+      } else if (userId && addressId && this.eventName === DeleteAddress) {
         this.deleteAddress.emit({
           userId: userId,
           addressId: addressId,
         });
         this.setAddress(userId);
+      } else if (this.eventName !== reset) {
+        this.openDialog(BeforeRegisterMessage);
       }
     }
   }
 
+  resetForm(form: FormGroup) {
+    form.reset();
+    const addressFormData = this.identityForm.get(Address);
+    addressFormData?.get(city)?.setValue(defaultCity);
+    addressFormData?.get(state)?.setValue(defaultState);
+    addressFormData?.get(pinCode)?.setValue(defaultPinCode);
+    addressFormData?.get(isDefault)?.setValue(true);
+  }
+
   setAddress(userId: string) {
-    this.store
-      .select(getSelectedAddress(userId))
-      .pipe(filter((f) => !!f))
-      .subscribe((address) => {
-        this.identityForm.get(Address)?.patchValue(address);
-      });
+    this.store.select(getSelectedAddress(userId)).subscribe((address) => {
+      this.dialog.closeAll();
+      const addressFormStore = this.identityForm.get(Address);
+      if (!address) {
+        this.openDialog(noAddressMessage);
+        addressFormStore?.get(pinCode)?.setValue(defaultPinCode);
+        addressFormStore?.get(isDefault)?.setValue(true);
+      } else {
+        addressFormStore?.patchValue(address);
+        if (
+          address.pinCode === defaultPinCode &&
+          this.eventName === DeleteAddress
+        ) {
+          this.openDialog(defaultAddressMessage);
+        } else if (this.eventName === DeleteAddress) {
+          this.openDialog(deleteAddressMessage);
+        }
+      }
+    });
   }
 
   setUniqueUser() {
@@ -111,7 +157,7 @@ export class RegisterationComponent implements OnInit {
       city: addressForm?.value.city,
       state: addressForm?.value.state,
       pinCode: addressForm?.value.pinCode,
-      isDefault: addressForm?.value.pinCode === pinCode ? true : false,
+      isDefault: addressForm?.value.pinCode === defaultPinCode ? true : false,
     };
     return address;
   }

@@ -17,6 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterationComponent } from './components/registeration/registeration.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { MatTableModule } from '@angular/material/table';
+import { DialogModalComponent } from './components/dialog-modal/dialog-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 export const routes: Routes = [
   {
@@ -33,6 +35,7 @@ export const routes: Routes = [
     ContentComponent,
     RegisterationComponent,
     UserDetailsComponent,
+    DialogModalComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +47,7 @@ export const routes: Routes = [
     MatTabsModule,
     MatInputModule,
     MatTableModule,
+    MatDialogModule,
     RouterModule.forChild(routes),
     StoreModule.forRoot({
       user: userInfoReducer,
