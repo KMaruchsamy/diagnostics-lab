@@ -7,6 +7,12 @@
         (userRegister)="userRegister($event)"
       ></identity-auth-registeration>
     </mat-tab>
-    <mat-tab label="UserDetails"> Content 2 </mat-tab>
+    <mat-tab label="UserDetails">
+      <identity-user-details
+        [userDetails]="userDetails$ | async"
+        [displayedColumns]="displayedColumns"
+        (deleteUser)="deleteUser($event)"
+      ></identity-user-details
+    ></mat-tab>
   </mat-tab-group>
 </div>

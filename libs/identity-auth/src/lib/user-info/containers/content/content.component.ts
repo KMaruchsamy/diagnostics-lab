@@ -1,16 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AddAddress, AddUser, DeleteAddress } from '../../+store';
+import { Observable, of } from 'rxjs';
+import {
+  AddAddress,
+  AddUser,
+  DeleteAddress,
+  DeleteUser,
+  getFilteredUsers,
+} from '../../+store';
 import { AppState } from '../../+store/app.state';
-import { IAddress, IUserInfo } from '../../models';
+import { IUserInfo } from '../../models';
 
 @Component({
   selector: 'identity-auth-content',
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss'],
 })
-export class ContentComponent {
+export class ContentComponent implements OnInit {
+  displayedColumns: string[] = ['userName', 'email', 'address', 'userId'];
+  userDetails$?: Observable<any>;
   constructor(private store: Store<AppState>) {}
+
+  ngOnInit(): void {
+    this.userDetails$ = this.store.select(getFilteredUsers);
+  }
 
   addAddress(event: any) {
     this.store.dispatch(
@@ -26,5 +39,9 @@ export class ContentComponent {
 
   userRegister(user: IUserInfo) {
     this.store.dispatch(AddUser({ user: user }));
+  }
+
+  deleteUser(userId: string) {
+    this.store.dispatch(DeleteUser({ userId: userId }));
   }
 }

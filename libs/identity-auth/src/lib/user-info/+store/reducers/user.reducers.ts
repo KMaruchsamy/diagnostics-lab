@@ -47,6 +47,7 @@ export const userInfoReducer = createReducer(
   })),
   on(DeleteUser, (state, { userId }) => ({
     ...state,
+    userInfo: [...state.userInfo.filter((user) => user.userId !== userId)],
     loading: true,
     loaded: false,
   })),

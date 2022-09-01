@@ -15,6 +15,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { userInfoReducer } from './+store';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterationComponent } from './components/registeration/registeration.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { MatTableModule } from '@angular/material/table';
 
 export const routes: Routes = [
   {
@@ -30,6 +32,7 @@ export const routes: Routes = [
     FooterComponent,
     ContentComponent,
     RegisterationComponent,
+    UserDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +43,7 @@ export const routes: Routes = [
     MatIconModule,
     MatTabsModule,
     MatInputModule,
+    MatTableModule,
     RouterModule.forChild(routes),
     StoreModule.forRoot({
       user: userInfoReducer,
