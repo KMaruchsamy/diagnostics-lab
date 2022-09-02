@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   AddAddress,
@@ -39,7 +39,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './registeration.component.html',
   styleUrls: ['./registeration.component.scss'],
 })
-export class RegisterationComponent implements OnInit {
+export class RegisterationComponent {
   @Output() addAddress: EventEmitter<{ userId: string; address: IAddress }> =
     new EventEmitter();
   @Output() deleteAddress: EventEmitter<{ userId: string; addressId: string }> =
@@ -67,8 +67,6 @@ export class RegisterationComponent implements OnInit {
       }),
     });
   }
-
-  ngOnInit(): void {}
 
   openDialog(message: string) {
     this.dialog.open(DialogModalComponent, {

@@ -1,12 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'identity-auth-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class HeaderComponent {}
