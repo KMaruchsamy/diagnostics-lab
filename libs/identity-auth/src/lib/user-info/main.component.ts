@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from './+store/app.state';
 
 @Component({
   selector: 'identity-auth-main',
@@ -8,7 +6,7 @@ import { AppState } from './+store/app.state';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  constructor(private store: Store<AppState>) {}
+  constructor() {}
 
   ngOnInit(): void {}
 }

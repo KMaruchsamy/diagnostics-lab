@@ -20,4 +20,11 @@ describe('UserDetailsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('remove user event triggered', () => {
+    jest.spyOn(component.deleteUser, 'emit');
+    const userId = '7f36e02f-09c7-4d79-aad7-90d519371b71';
+    component.removeUser(userId);
+    expect(component.deleteUser.emit).toHaveBeenCalledWith(userId);
+  });
 });

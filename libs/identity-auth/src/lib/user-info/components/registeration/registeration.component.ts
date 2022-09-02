@@ -32,6 +32,7 @@ import { Store } from '@ngrx/store';
 import { getSelectedAddress } from '../../+store';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogModalComponent } from '../dialog-modal/dialog-modal.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'identity-auth-registeration',
@@ -46,6 +47,7 @@ export class RegisterationComponent implements OnInit {
   @Output() userRegister: EventEmitter<IUserInfo> = new EventEmitter();
   identityForm: FormGroup;
   eventName: string;
+  private subscriptions: Subscription = new Subscription();
   constructor(
     private formBuilder: FormBuilder,
     private store: Store<AppState>,
@@ -116,25 +118,27 @@ export class RegisterationComponent implements OnInit {
   }
 
   setAddress(userId: string) {
-    this.store.select(getSelectedAddress(userId)).subscribe((address) => {
-      this.dialog.closeAll();
-      const addressFormStore = this.identityForm.get(Address);
-      if (!address) {
-        this.openDialog(noAddressMessage);
-        addressFormStore?.get(pinCode)?.setValue(defaultPinCode);
-        addressFormStore?.get(isDefault)?.setValue(true);
-      } else {
-        addressFormStore?.patchValue(address);
-        if (
-          address.pinCode === defaultPinCode &&
-          this.eventName === DeleteAddress
-        ) {
-          this.openDialog(defaultAddressMessage);
-        } else if (this.eventName === DeleteAddress) {
-          this.openDialog(deleteAddressMessage);
+    this.subscriptions.add(
+      this.store.select(getSelectedAddress(userId)).subscribe((address) => {
+        this.dialog.closeAll();
+        const addressFormStore = this.identityForm.get(Address);
+        if (!address) {
+          this.openDialog(noAddressMessage);
+          addressFormStore?.get(pinCode)?.setValue(defaultPinCode);
+          addressFormStore?.get(isDefault)?.setValue(true);
+        } else {
+          addressFormStore?.patchValue(address);
+          if (
+            address.pinCode === defaultPinCode &&
+            this.eventName === DeleteAddress
+          ) {
+            this.openDialog(defaultAddressMessage);
+          } else if (this.eventName === DeleteAddress) {
+            this.openDialog(deleteAddressMessage);
+          }
         }
-      }
-    });
+      })
+    );
   }
 
   setUniqueUser() {
@@ -157,5 +161,9 @@ export class RegisterationComponent implements OnInit {
       isDefault: addressForm?.value.pinCode === defaultPinCode ? true : false,
     };
     return address;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions?.unsubscribe();
   }
 }
