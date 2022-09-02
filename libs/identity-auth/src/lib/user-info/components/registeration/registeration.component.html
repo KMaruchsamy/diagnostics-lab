@@ -33,7 +33,7 @@
       </mat-error>
     </mat-form-field>
     <div formGroupName="address" class="page-content-form__row_address">
-      Address
+      <p class="page-content-form__row_address-title">Address</p>
       <mat-form-field class="hide">
         <input matInput formControlName="addressId" />
       </mat-form-field>
@@ -88,23 +88,38 @@
           enter pincode with 6 degit numeric
         </mat-error>
       </mat-form-field>
-      <button mat-raised-button color="primary" name="addaddress">
-        Add Address
+      <div class="page-content-form__row_address-action">
+        <button
+          class="page-content-form__row_address-action-add"
+          mat-raised-button
+          color="primary"
+          name="addaddress"
+        >
+          Add Address
+        </button>
+        <button mat-stroked-button color="warn" name="deleteaddress">
+          Delete Address
+        </button>
+      </div>
+    </div>
+    <div class="page-content-form__row-action">
+      <button
+        class="page-content-form__row-action_btn"
+        type="submit"
+        mat-raised-button
+        color="primary"
+        name="register"
+      >
+        Register
       </button>
-      <button mat-raised-button color="primary" name="deleteaddress">
-        Delete Address
+      <button
+        mat-stroked-button
+        color="warn"
+        (click)="resetForm(identityForm)"
+        name="reset"
+      >
+        Reset
       </button>
     </div>
   </div>
-  <button type="submit" mat-raised-button color="primary" name="register">
-    Register
-  </button>
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="resetForm(identityForm)"
-    name="reset"
-  >
-    Reset
-  </button>
 </form>

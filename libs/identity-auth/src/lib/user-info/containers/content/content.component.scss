@@ -1,2 +1,9 @@
-.page-content {
+.page {
+  display: flex;
+  align-items: center;
+  padding: 20px 12rem;
+  margin: 20px 0;
+  &-content {
+    width: 100%;
+  }
 }

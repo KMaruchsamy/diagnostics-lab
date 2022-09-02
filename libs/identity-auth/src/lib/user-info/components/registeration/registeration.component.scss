@@ -1,9 +1,25 @@
 .page-content-form__row {
   display: flex;
   flex-direction: column;
+  padding: 1rem 3rem;
   &_address {
     display: flex;
     flex-direction: column;
+    padding: 16px;
+    border: 1px solid gray;
+    &-action {
+      display: flex;
+      justify-content: flex-end;
+      &-add {
+        margin-right: 16px;
+      }
+    }
+  }
+  &-action {
+    padding: 16px;
+    &_btn {
+      margin-right: 16px;
+    }
   }
 }
 
