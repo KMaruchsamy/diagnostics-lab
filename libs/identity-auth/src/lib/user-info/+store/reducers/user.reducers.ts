@@ -2,17 +2,9 @@ import { createReducer, on } from '@ngrx/store';
 import { IUserInfo } from '../../models';
 import {
   AddUser,
-  AddUserSuccess,
-  AddUserFail,
   AddAddress,
-  AddAddressSuccess,
-  AddaddressFail,
   DeleteAddress,
-  DeleteAddressSuccess,
-  DeleteAddressFail,
   DeleteUser,
-  DeleteUserSuccess,
-  DeleteUserFail,
 } from '../actions/user.actions';
 
 export interface userState {
@@ -35,31 +27,11 @@ export const userInfoReducer = createReducer(
     loading: true,
     loaded: false,
   })),
-  on(AddUserSuccess, (state) => ({
-    ...state,
-    loading: false,
-    loaded: true,
-  })),
-  on(AddUserFail, (state) => ({
-    ...state,
-    loading: false,
-    loaded: true,
-  })),
   on(DeleteUser, (state, { userId }) => ({
     ...state,
     userInfo: [...state.userInfo.filter((user) => user.userId !== userId)],
     loading: true,
     loaded: false,
-  })),
-  on(DeleteUserSuccess, (state) => ({
-    ...state,
-    loading: false,
-    loaded: true,
-  })),
-  on(DeleteUserFail, (state) => ({
-    ...state,
-    loading: false,
-    loaded: true,
   })),
   on(AddAddress, (state, { userId, address }) => ({
     ...state,
@@ -77,16 +49,6 @@ export const userInfoReducer = createReducer(
     ],
     loading: true,
     loaded: false,
-  })),
-  on(AddAddressSuccess, (state) => ({
-    ...state,
-    loading: false,
-    loaded: true,
-  })),
-  on(AddaddressFail, (state) => ({
-    ...state,
-    loading: false,
-    loaded: true,
   })),
   on(DeleteAddress, (state, { userId, addressId }) => {
     return {
@@ -108,15 +70,5 @@ export const userInfoReducer = createReducer(
       loading: true,
       loaded: false,
     };
-  }),
-  on(DeleteAddressSuccess, (state) => ({
-    ...state,
-    loading: false,
-    loaded: true,
-  })),
-  on(DeleteAddressFail, (state) => ({
-    ...state,
-    loading: false,
-    loaded: true,
-  }))
+  })
 );
