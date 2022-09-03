@@ -12,7 +12,6 @@ import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Address, mockUser } from '../../models';
 import { AppState } from '../../+store/app.state';
-import { getSelectedAddress } from '../../+store';
 
 describe('RegisterationComponent', () => {
   let component: RegisterationComponent;
@@ -101,6 +100,33 @@ describe('RegisterationComponent', () => {
       component.register(event);
       expect(component.setAddress).toBeCalled();
       expect(component.deleteAddress.emit).toHaveBeenCalled();
+    });
+
+    it('reset event triggered', () => {
+      // arrange
+      component.identityForm.patchValue(mockUser);
+      const openDialogSpy = jest.spyOn(component.dialog, 'open');
+      const event = {
+        submitter: {
+          name: 'someEvent',
+        },
+      };
+      // act
+      component.register(event);
+      // assert
+      expect(openDialogSpy).toHaveBeenCalled();
+    });
+  });
+
+  describe('helper function', () => {
+    it('reset form', () => {
+      // arrange
+      component.identityForm.patchValue(mockUser);
+      // act
+      component.resetForm(component.identityForm);
+      const expected = component.identityForm.get(Address)?.value.isDefault;
+      // assert
+      expect(expected).toEqual(true);
     });
   });
 });

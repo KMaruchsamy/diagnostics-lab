@@ -20,10 +20,23 @@ describe('User Selectors', () => {
     ];
     expect(actual).toEqual(expected);
   });
-  it('should return the selected user', () => {
+
+  it('should return null when no users available', () => {
+    const actual = getFilteredUsers.projector([]);
+    expect(actual).toEqual(null);
+  });
+
+  it('should return the selected address', () => {
     const actual = getSelectedAddress(
       '7f36e02f-09c7-4d79-aad7-90d519371b71'
     ).projector([mockUser]);
     expect(actual).toEqual(mockUser.address[0]);
+  });
+
+  it('should return null when no address found', () => {
+    const actual = getSelectedAddress(
+      '7f36e02f-09c7-4d79-aad7-90d519371b71'
+    ).projector([]);
+    expect(actual).toEqual(null);
   });
 });
