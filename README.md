@@ -8,6 +8,8 @@ This project was generated using [Nx](https://nx.dev).
 
 ## DiagnosticsLab Web Apps
 
+Table of contents
+
 - Introduction
 - Technologies
 - Unit test case & lint
@@ -20,7 +22,7 @@ This project was generated using [Nx](https://nx.dev).
 > Registration : Admin should have access to add 'N' no of users in the portal and should be able to add 'N' no of address to the particular user with default address, The default address can't be deleted (pincode === 123456).
 > User Details : Admin should have access to view all the users in the user details tab with default address, should have access to delete the user.
 
-## Technologies :
+## Technologies
 
 - Angular 14.1.0
 - Nrwl Nx Architecture 14.15.10 - Microsite / Monorepo pattern
@@ -70,6 +72,10 @@ Require node version to run the application in your local - v16.14.0
 - Resiliency message for default addresses can not be deleted.
 - Resiliency message, if no address is found.
 - Resiliency message for deleting address.
+
+## Demo
+
+[Demo](https://kmaruchsamy.github.io/diagnostics-lab/user)
 
 ## Quick Start & Documentation
 
